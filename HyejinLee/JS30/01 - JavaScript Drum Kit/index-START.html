@@ -61,6 +61,13 @@
 
             // 배열로 변경
             const arrKey = Array.from(key);
+            const key_ = document.getElementsByClassName('key')
+            // .getAttribute('data-key');
+            console.log(key_[0].getAttribute('data-key'));   // 반복문 사용하기  (25분 소요)
+
+            
+            const dataKey = audio.getAttribute('data-key')
+            console.log(audio);
 
             //
             for (let i = 0; i < arrKey.length; i++) {
@@ -85,11 +92,27 @@
             //     }
             //
 
+
+            // for (let i = 0; i < arrKey.length; i++) {
+            //     arrKey[i].addEventListener("keydown", () => {
+            //         arrKey[i].classList.add("playing");
+            //         audio[i].play();
+            //     });
+            //     arrKey[i].addEventListener("keyup", () => {
+            //         arrKey[i].classList.remove("playing");
+            //     });
+            // }
+            
+            
+
             //키다운 되었을 때 소리, 불빛 추가
             window.addEventListener("keydown", (e) => {
                 console.log(e.keyCode);
+                 
+
+
                 switch (e.keyCode) {
-                    case 65:
+                    case 65: 
                         audio[0].play();
                         arrKey[0].classList.add("playing");
                         // setTimeout(

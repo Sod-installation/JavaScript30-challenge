@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS + CSS Clock</title>
+</head>
+<body>
+
+  <div class="wrapper">
+    <div class="clock">
+      <div class="clock-face">
+        <div class="hand hour-hand"></div>
+        <div class="hand min-hand"></div>
+        <div class="hand second-hand"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <style>
+    html {
+      background: #018DED url(https://unsplash.it/1500/1000?image=881&blur=5);
+      background-size: cover;
+      font-family: 'helvetica neue';
+      text-align: center;
+      font-size: 10px;
+    }
+
+    body {
+      margin: 0;
+      font-size: 2rem;
+      display: flex;
+      flex: 1;
+      min-height: 100vh;
+      align-items: center;
+    }
+
+    .clock {
+      width: 30rem;
+      height: 30rem;
+      border: 20px solid white;
+      border-radius: 50%;
+      margin: 50px auto;
+      position: relative;
+      padding: 2rem;
+      box-shadow:
+        0 0 0 4px rgba(0,0,0,0.1),
+        inset 0 0 0 3px #EFEFEF,
+        inset 0 0 10px black,
+        0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .clock-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform: translateY(-3px);
+      /* // account for the height of the clock hands */
+    }
+
+    .hand {
+      width: 50%;
+      height: 6px;
+      background: black;
+      position: absolute;
+      top: 50%;
+    }
+
+    .hand.second-hand {
+      /* 중심축 변경*/
+      /* 참고: https://mjmjmj98.tistory.com/41   */
+      /* https://programmers.tistory.com/entry/CSS-%EB%B3%80%ED%99%98-%EC%86%8D%EC%84%B1-transform-origin */
+      transform-origin: 100%; 
+    }
+    .hand.min-hand {
+      transform-origin: 100%; 
+    }
+    .hand.hour-hand {
+      transform-origin: 100%; 
+    }
+  /* clock를 wrapper로 감싸서 시계 자체를 돌려버림
+    아쉬운 점: 지금은 시계에 별다른 특징이 없어서 티가 안나지만 만약 시계 자체에 상하좌우를 알 수 있을 만한 특징이 있다면(시계 숫자가 각인되어 있다면) 현재 12시 방향에 9시가 보일 것 */
+    .wrapper {
+      transform: rotate(90deg);
+      margin: 0 auto;
+    }
+   
+  </style>
+
+  <script>
+    const sec = document.querySelector(".second-hand");
+    const min = document.querySelector(".min-hand");
+    const hour = document.querySelector(".hour-hand");
+
+    function clock() {
+    const now = new Date();
+    const 초침=now.getSeconds();
+    const 분침=now.getMinutes();
+    const 시침=now.getHours();
+
+    // hour.style.transform=`rotate(${}deg)`;
+    // 자바스크립트 시간 계산 
+    // https://horangi.tistory.com/396
+    // https://ko-ko.tistory.com/17
+    sec.style.transform =`rotate(${(6 * 초침)}deg)`; 
+    min.style.transform =`rotate(${((6) * 분침) + (초침/60)*6}deg)`;
+    hour.style.transform =`rotate(${((30) * 시침) + ((분침/60)*30)}deg)`;
+    }
+    // setInterval을 사용하면 일정 시간 반복 유지됨
+    // 참고: https://www.daleseo.com/js-timer/
+    setInterval(clock, 1000);
+
+  </script>
+</body>
+</html>
