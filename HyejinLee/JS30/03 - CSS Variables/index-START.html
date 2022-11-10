@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Scoped CSS Variables and JS</title>
+    </head>
+    <body>
+        <h2>
+            Update CSS Variables with
+            <!-- 얼탱이 X h1이 아니라 hl이었음😑 -->
+            <span style="color: #ffc600" class="hl">JS</span>
+        </h2>
+
+        <div class="controls">
+            <label for="spacing">Spacing:</label>
+            <input
+                id="spacing"
+                type="range"
+                name="spacing"
+                min="10"
+                max="200"
+                value="10"
+                data-sizing="px"
+            />
+
+            <label for="blur">Blur:</label>
+            <input
+                id="blur"
+                type="range"
+                name="blur"
+                min="0"
+                max="25"
+                value="10"
+                data-sizing="px"
+            />
+
+            <label for="base">Base Color</label>
+            <input id="base" type="color" name="base" value="#ffc600" />
+        </div>
+
+        <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500" />
+
+        <style>
+            /*
+      misc styles, nothing to do with CSS variables
+    */
+
+            body {
+                text-align: center;
+                background: #193549;
+                color: white;
+                font-family: "helvetica neue", sans-serif;
+                font-weight: 100;
+                font-size: 50px;
+            }
+
+            .controls {
+                margin-bottom: 50px;
+            }
+
+            input {
+                width: 100px;
+            }
+
+            img {
+                border: 10px solid #ffc600;
+
+                /* blur 처리 시 filter */
+                filter: blur(12.5px);
+                -webkit-filter: blur(12.5px);
+            }
+        </style>
+
+        <script>
+            // e.target.value
+
+            //1. spacing으로 보더 두께 조정
+            const inputSpacing = document.querySelector("#spacing");
+            const img = document.querySelector("img");
+            let border = 10;
+            inputSpacing.addEventListener("change", (e) => {
+                const spacingValue = e.target.value;
+                border = spacingValue;
+                img.style.border = `${spacingValue}px solid ${color}`;
+            });
+
+            //2. blur로 사진 블러처리
+            const blur = document.querySelector("#blur");
+            blur.addEventListener("change", (e) => {
+                img.style.filter = `blur(${e.target.value}px)`;
+            });
+
+            //3. basecolor로 보더 컬러 변경, JS 글자 컬러 변경
+            const base = document.querySelector("#base");
+            const fontColor = document.querySelector(".hl");
+            const colorPallete = document.querySelector("#base");
+            let color = "#ffc600";
+            colorPallete.addEventListener("change", (e) => {
+                img.style.border = `${border}px solid ${e.target.value}`;
+
+                //앞서 변경된 컬러로 업데이트
+                color = e.target.value;
+                fontColor.style.color = color;
+            });
+        </script>
+    </body>
+</html>
